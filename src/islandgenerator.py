@@ -1,61 +1,34 @@
-import pygame
-import math
-import random
+import gi
 
-WIDTH, HEIGHT = 800, 800
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Perlin Simulation")
+# Import GTK 3.0
+gi.require_version("Gtk", "3.0")
+gi.require_version('Notify', '0.7')
 
-WHITE = (255, 255, 255)
-BLUE = (205, 255, 255)
-COL = (150, 255, 255)
+from gi.repository import Gtk
+from gi.repository import Notify
 
-# Set colors
-WHITE = (255, 255, 255)
-BLUE = (205, 255, 255)
-COL = (150, 255, 255)
+# Init Window
+class IslandGenerator(Gtk.Window):
+    def __init__(self):
+        Gtk.Window.__init__(self, title="Island Generator")
+        Gtk.Window.set_default_size(self, 640, 480)
 
-# Generate Island
-class IslandGenerator:
-    noise_scale = 0.007
-    pygame.init()
+        self.box = Gtk.Box(spacing=6)
+        self.add(self.box)
+       
+        # Set Button
+        self.button = Gtk.Button(label="Generate")
+        self.button.set_halign(Gtk.Align.LEFT)
+        self.button.set_valign(Gtk.Align.HIGH)
+        # Uncomment when algo is added
+        #self.button.connect("clicked", self.on_button_clicked)
+        self.box.pack_start(self.button, True, True, 0)
 
-    # Perlin Noise
-    def draw(win):
-        win.fill(WHITE)
-        noise_scale = 0.007
-        def setup():
-            size(800, 800)
-            background(255, 255, 255)
-            for x in range(1000):
-                for y in range(1000):
-                    n = noise(x * noise_scale, y * noise_scale)
-                    if (n > 0.5):
-                        stroke(204, 192, 155)
-                    if (n > 0.54):
-                        stroke(96, 117, 94)
-                    if (n > 0.70):
-                        stroke(255, 255, 255)
-                    if (n < 0.5):
-                        stroke(143, 196, 204)
-                    if (n > 0.75):
-                        stroke(150, 150, 150)
-                    if (n > 0.4):
-                        point(x, y)
-        setup()
-        pygame.display.update()
+    #def on_button_clicked(self, widget):
+        # Insert algo here
 
-        # Pygame Window
-        def main():
-            run = True
-            clock = pygame.time.Clock()
-            WIN.fill(x, y)
-            while run:
-                clock.tick(60)
-                draw(WIN)
-                pygame.display.update()
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        run = False
-            pygame.quit()
-        main()
+# Do not touch
+win = IslandGenerator()
+win.connect("destroy", Gtk.main_quit)
+win.show_all()
+Gtk.main()
