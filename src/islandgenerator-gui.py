@@ -1,4 +1,4 @@
-from islandgenerator-algo import generate as generate
+from 'islandgenerator-algo' import generate as generate
 from tkinter import *
 window=Tk()
 # Add widgets here

@@ -1,4 +1,4 @@
-from islandgenerator-algo import buttongenerator as btn
+from 'islandgenerator-gui' import buttongenerator as btn
 
 class generate:
     noise_scale = 0.07
